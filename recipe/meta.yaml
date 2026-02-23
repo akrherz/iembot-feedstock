@@ -1,4 +1,4 @@
-{% set version = "0.3.1" %}
+{% set version = "0.4.0" %}
 {% set name = "iembot" %}
 
 package:
@@ -7,10 +7,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/iembot-{{ version }}.tar.gz
-  sha256: 3037f0f66e871e8cfec2133d2af0e68a31515826fcf3e401f9012ff6290c5370
-  patches:
-    # remove with next release
-    - gh143_remove_pwd.patch
+  sha256: a090e60c2b78d1fee5ee2e3cb8d60c88663727d128f3f8c31370b98cde900530
 
 build:
   entry_points:
@@ -35,7 +32,6 @@ requirements:
     - psycopg
     - pyiem >=1.26
     - pymemcache
-    - python-twitter
     - requests
     - service-identity
     - twisted >=18.4
