@@ -1,0 +1,65 @@
+schema_version: 1
+
+context:
+  version: "0.4.0"
+  name: iembot
+
+package:
+  name: iembot
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/iembot-${{ version }}.tar.gz
+  sha256: a090e60c2b78d1fee5ee2e3cb8d60c88663727d128f3f8c31370b98cde900530
+
+build:
+  number: 0
+  noarch: python
+  script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  python:
+    entry_points:
+      - iembot = iembot.main:main
+
+requirements:
+  host:
+    - python ${{ python_min }}.*
+    - setuptools >=64
+    - setuptools-scm >=8
+    - pip
+  run:
+    - python >=${{ python_min }}
+    - atproto
+    - click
+    - feedgen
+    - httpx
+    - mastodon.py
+    - psycopg
+    - pyiem >=1.26
+    - pymemcache
+    - requests
+    - service-identity
+    - twisted >=18.4
+
+tests:
+  - python:
+      imports:
+        - iembot
+      pip_check: true
+      python_version: ${{ python_min }}
+  - requirements:
+      run:
+        - pip
+        - python ${{ python_min }}.*
+    script:
+      - iembot --help
+      - iembot run --help
+
+about:
+  summary: An XMPP bot that moves weather data around and other things.
+  license: MIT
+  license_file: LICENSE
+  homepage: https://github.com/akrherz/iembot
+
+extra:
+  recipe-maintainers:
+    - akrherz
